@@ -156,22 +156,30 @@ function updateTurnButtons(sides) {
     turnDiv.appendChild(radio);
   }
 
-  if (turnDiv.hasChildNodes()) {
+  turnDiv.addEventListener("change", turnButtonListener);
+  
+  /*if (turnDiv.hasChildNodes()) {
     turnDiv.dataset.event = "true";
-    turnDiv.addEventListener("change", turnButtonListener);
+    
   } else if (turnDiv.dataset.event === "true") {
     turnDiv.dataset.event = "false";
     turns = 1;
 
     turnDiv.removeEventListener("change", turnButtonListener);
   }
+
+  if (get(`turns-${turns}`) === null) {
+    console.log("here we are")
+    turns = parseInt(turnDiv.lastChild.value, 10);
+    turnDiv.lastChild.checked = true;
+  }*/
 }
 
 function turnButtonListener(event) {
   turns = parseInt(event.target.value, 10);
   clear(get("svg"));
   console.log(sides, turns);
-  drawPolygon(sides, lineStatus, turns);
+  drawPolygon(sides, turns, lineStatus);
 }
 
 let sides = 3;
@@ -183,21 +191,21 @@ const radius = (svgSize / 2) - 1;
 let lineStatus = 0;
 
 updateTurnButtons(sides);
-drawPolygon(sides, 0, turns);
+drawPolygon(sides, turns, lineStatus);
 
 const slider = get("poly-slider")
 slider.addEventListener("input", (event) => {
   sides = event.target.value;
   clear(get("svg"));
   updateTurnButtons(sides);
-  drawPolygon(sides, lineStatus, turns);
+  drawPolygon(sides, turns, lineStatus);
 });
 
 const lineButtons = get("line-buttons");
 lineButtons.addEventListener("change", (event) => {
   lineStatus = event.target.value;
   clear(get("svg"));
-  drawPolygon(sides, lineStatus, turns);
+  drawPolygon(sides, turns, lineStatus);
 });
 
 //const turnButtons = get("turn-buttons");
