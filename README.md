@@ -1,1 +1,1 @@
-# [Polygonograph](https://github.com/dkallen78/polygonograph/polygonograph.html)
+# [Polygonograph](https://dkallen78.github.io/polygonograph/polygonograph.html)
