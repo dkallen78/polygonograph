@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      Polygonograph
+    </title>
+    <link rel="stylesheet" href="programatic-polygonograph.css">
+
+    <script defer src="make.js"></script>
+    <script defer src="math.js"></script>
+    <script defer src="polygonograph.js"></script>
+ 
+    <meta name="description" content="description">
+  </head>
+  <body>
+    <main>
+      <svg id="svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"></svg>
+      <section id="control-panel">
+        <div id="poly-slider-div">
+          <label for="poly-slider">Number of Sides</label>
+          <input type="range" id="poly-slider" name="poly-slider" min="3" max="50" value="3">
+        </div>
+        <fieldset id="line-buttons">
+          <legend>Additional Line Options</legend>
+          <div>
+            <input type="radio" id="no-lines" name="line-buttons" value="0" checked>
+            <label for="no-lines">No Additional Lines</label>
+
+            <input type="radio" id="vertex-2-vertex" name="line-buttons" value="1">
+            <label for="vertex-2-vertex">Vertex to Vertex</label>
+
+            <input type="radio" id="vertex-2-midpoint" name="line-buttons" value="2">
+            <label for="vertex-2-midpoint">Vertex to Edge Midpoint</label>
+          </div>
+        </fieldset>
+      </section>
+    </main>
+  </body>
+</html>
