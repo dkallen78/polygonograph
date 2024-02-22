@@ -40,6 +40,13 @@ function makePolyPath(sides, startAngle, turns) {
 }
 
 function connectVertices(points, svg) {
+  //----------------------------------------------------//
+  //Connects all of the vertices with lines             //
+  //----------------------------------------------------//
+  //points(array[Point]): The coordinates of the        //
+  //  vertices to be connected                          //
+  //svg(element): the element in which to draw the lines//
+  //----------------------------------------------------//
 
   for (let i = 0; i < points.length - 2; i++) {
 
@@ -50,12 +57,19 @@ function connectVertices(points, svg) {
       let line = make.line(points[i].x, points[i].y, points[j].x, points[j].y);
       line.setAttribute("stroke", "black");
       svg.appendChild(line);
-
     }
   }
 }
 
 function connectToMidpoints(points, svg) {
+  //----------------------------------------------------//
+  //Connects the vertices with the midpoints betweeen   //
+  //  them                                              //
+  //----------------------------------------------------//
+  //points(array[Point]): The coordinates of the        //
+  //  vertices to be connected                          //
+  //svg(element): the element in which to draw the lines//
+  //----------------------------------------------------//
 
   let midpoints = [];
   //
@@ -66,23 +80,31 @@ function connectToMidpoints(points, svg) {
   //
   //Iterates through the vertex points
   for (let i = 0; i < points.length; i++) {
-
     let start = i + 1;
     let end = start + (points.length - 2);
     //
     //Iterates over the midpoints
     for (let j = start; j < end; j++) {
-
       let line = make.line(points[i].x, points[i].y, midpoints[j % points.length].x, midpoints[j % points.length].y);
       line.setAttribute("stroke", "black");
       svg.appendChild(line);
     }
-
-    
   }
 }
 
-function drawPolygon(sides, lineStatus, turns) {
+function drawPolygon(sides, turns, lineStatus) {
+  //----------------------------------------------------//
+  //Draws the polygon on the screen and any extra lines //
+  //  as indicated                                      //
+  //----------------------------------------------------//
+  //sides(integer): number of edges to be drawn         //
+  //turns(integer): how many verticies to skip while    //
+  //  plotting the path                                 //
+  //lineStatus(integer): determines if any extra lines  //
+  //  should be drawn                                   //
+  //    1: lines connecting vertices to each other      //
+  //    2: lines connecting vertices to edge midpoints  //
+  //----------------------------------------------------//
 
   let polyPath = makePolyPath(sides, initialAngle, turns);
 
@@ -106,6 +128,12 @@ function drawPolygon(sides, lineStatus, turns) {
 }
 
 function updateTurnButtons(sides) {
+  //----------------------------------------------------//
+  //Updates the radio buttons that determine the number //
+  //  of turns in the polygon                           //
+  //----------------------------------------------------//
+  //sides(integer): number of edges in the polygon      //
+  //----------------------------------------------------//
 
   let turnDiv = get("turn-buttons-div");
   clear(turnDiv);
