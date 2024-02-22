@@ -103,18 +103,22 @@ function findFactors(n) {
   return factors;
 }
 
-function findCoprimes(n1, n2) {
-  
+function findGreatestFactor(n1, n2) {
+
+  if (n1 === 1 || n2 === 1) return 1;
+
+  let commonFactors = [];
   const factors1 = findFactors(n1);
   const factors2 = findFactors(n2);
 
-  const coprimes = [];
+  if (factors1.includes(n2)) return n2;
+  if (factors2.includes(n1)) return n1;
 
-  factors1.forEach((element) => {
-    if (!factors2.includes(element)) {
-      coprimes.push(element);
-    }
+  factors1.forEach((n) => {
+    if (factors2.includes(n)) commonFactors.push(n);
   });
-
-  return coprimes;
+  
+  if (commonFactors.length === 0) return 1;
+  return commonFactors[commonFactors.length - 1];
 }
+

@@ -1,4 +1,4 @@
-function makePolyPath(sides, startAngle, turns) {
+function makePolyPath(sides, turns, startAngle) {
   //----------------------------------------------------//
   //Makes the path for the polygon                      //
   //----------------------------------------------------//
@@ -16,10 +16,43 @@ function makePolyPath(sides, startAngle, turns) {
   //----------------------------------------------------//
 
   const angleChange = 360 / sides;
+  //let angle = startAngle;
   let shapePath = "";
   let points = [];
 
-  for (let i = 0; i < sides * turns; i += turns) {
+  let GCD = findGreatestFactor(sides, turns);
+  let baseEdges = sides / GCD;
+  let baseTurns = turns / GCD;
+  let stellations = GCD;
+
+  console.clear();
+  console.log(`{${baseEdges}/${baseTurns}} ${GCD}`)
+
+  for (let i = 0; i < stellations; i++) {
+
+    let angle = startAngle + (angleChange * i);
+
+    for (let j = 0; j < sides * turns; j += turns) {
+
+      const x = center + (Math.cos(toRad(angle + (angleChange * j))) * radius);
+      const y = center + (Math.sin(toRad(angle + (angleChange * j))) * radius);
+
+      const point = new Point(x, y);
+      points.push(point);
+
+      if (j === 0) {
+        shapePath += `M ${x} ${y} `;
+      } else {
+        shapePath += `L ${x} ${y} `;
+      }
+    }
+    shapePath += "Z ";
+
+  }
+
+  console.log(shapePath);
+
+  /*for (let i = 0; i < sides * turns; i += turns) {
 
     const x = center + (Math.cos(toRad(startAngle + (angleChange * i))) * radius);
     const y = center + (Math.sin(toRad(startAngle + (angleChange * i))) * radius);
@@ -34,7 +67,7 @@ function makePolyPath(sides, startAngle, turns) {
     }
   }
 
-  shapePath += "Z";
+  shapePath += "Z";*/
 
   return {points: points, path: shapePath};
 }
@@ -106,7 +139,7 @@ function drawPolygon(sides, turns, lineStatus) {
   //    2: lines connecting vertices to edge midpoints  //
   //----------------------------------------------------//
 
-  let polyPath = makePolyPath(sides, initialAngle, turns);
+  let polyPath = makePolyPath(sides, turns, initialAngle);
 
   const svg = get("svg");
 
@@ -144,10 +177,6 @@ function updateTurnButtons(sides) {
   turnDiv.appendChild(label);
   let radio = make.radio("turns", "1", "turns-1");
   turnDiv.appendChild(radio);
-
-  /*if (sides < 5) {
-    return
-  };*/
 
   const factors = findFactors(sides);
 
