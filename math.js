@@ -82,3 +82,39 @@ function toDeg(rad) {
 
   return rad * (180 / Math.PI);
 }
+
+function findFactors(n) {
+  //----------------------------------------------------//
+  //Finds all the factors of a number except for itself //
+  //  and 1                                             //
+  //----------------------------------------------------//
+  //n(integer): the number to find the factors of       //
+  //----------------------------------------------------//
+  //return(array[integer]): an array of factors         //
+  //----------------------------------------------------//
+
+  let factors = [];
+
+  for (let i = 2; i <= (n / 2); i++) {
+    
+    if ((n % i) === 0) factors.push(i);
+  }
+
+  return factors;
+}
+
+function findCoprimes(n1, n2) {
+  
+  const factors1 = findFactors(n1);
+  const factors2 = findFactors(n2);
+
+  const coprimes = [];
+
+  factors1.forEach((element) => {
+    if (!factors2.includes(element)) {
+      coprimes.push(element);
+    }
+  });
+
+  return coprimes;
+}

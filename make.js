@@ -33,6 +33,25 @@ function make(type, id, classes) {
   return element;
 }
 
+make.label = function(forAttribute, text) {
+
+  let label = make("label");
+  label.setAttribute("for", forAttribute);
+  label.innerHTML = text;
+  return label;
+}
+
+make.radio = function(name, value, id) {
+
+  let radio = make("input");
+  radio.setAttribute("type", "radio");
+  radio.setAttribute("name", name);
+  radio.setAttribute("value", value);
+  radio.setAttribute("id", id);
+
+  return radio;
+}
+
 make.svg = function(id, classes, viewBox) {
   let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   if (typeof id === "string") {svg.id = id}

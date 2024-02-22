@@ -1,10 +1,25 @@
-function makePolyPath(sides, startAngle) {
+function makePolyPath(sides, startAngle, turns) {
+  //----------------------------------------------------//
+  //Makes the path for the polygon                      //
+  //----------------------------------------------------//
+  //sides(integer): number of sides or edges            //
+  //startAngle(integer): the initial angle from which   //
+  //  to draw the edges                                 //
+  //turns(integer): how many vertices to skip between   //
+  //  the edges                                         //
+  //----------------------------------------------------//
+  //return(object):                                     //
+  //  .points(array[Point]): an array of the (x,y) pairs//
+  //    of the polygon vertices                         //
+  //  .path(string): the strink that defines the path   //
+  //    of the polygon edges                            //
+  //----------------------------------------------------//
 
   const angleChange = 360 / sides;
   let shapePath = "";
   let points = [];
 
-  for (let i = 0; i < sides; i++) {
+  for (let i = 0; i < sides * turns; i += turns) {
 
     const x = center + (Math.cos(toRad(startAngle + (angleChange * i))) * radius);
     const y = center + (Math.sin(toRad(startAngle + (angleChange * i))) * radius);
@@ -67,9 +82,9 @@ function connectToMidpoints(points, svg) {
   }
 }
 
-function drawPolygon(sides, lineStatus) {
+function drawPolygon(sides, lineStatus, turns) {
 
-  let polyPath = makePolyPath(sides, initialAngle);
+  let polyPath = makePolyPath(sides, initialAngle, turns);
 
   const svg = get("svg");
 
@@ -90,28 +105,74 @@ function drawPolygon(sides, lineStatus) {
 
 }
 
+function updateTurnButtons(sides) {
+
+  let turnDiv = get("turn-buttons-div");
+  clear(turnDiv);
+
+  let label = make.label("turns-1", "1");
+  turnDiv.appendChild(label);
+  let radio = make.radio("turns", "1", "turns-1");
+  turnDiv.appendChild(radio);
+
+  if (sides < 5) {
+    return
+  };
+
+  const factors = findFactors(sides);
+
+  for (let i = 2; i < sides / 2; i++) {
+    label = make.label(`turns-${i}`, `${i}`);
+    turnDiv.appendChild(label);
+    radio = make.radio("turns", i, `turns-${i}`);
+    turnDiv.appendChild(radio);
+  }
+
+  if (turnDiv.hasChildNodes()) {
+    turnDiv.dataset.event = "true";
+    turnDiv.addEventListener("change", turnButtonListener);
+  } else if (turnDiv.dataset.event === "true") {
+    turnDiv.dataset.event = "false";
+    turns = 1;
+
+    turnDiv.removeEventListener("change", turnButtonListener);
+  }
+}
+
+function turnButtonListener(event) {
+  turns = parseInt(event.target.value, 10);
+  clear(get("svg"));
+  console.log(sides, turns);
+  drawPolygon(sides, lineStatus, turns);
+}
+
 let sides = 3;
+let turns = 1;
 let initialAngle = 270;
 const svgSize = 100;
 const center = svgSize / 2;
 const radius = (svgSize / 2) - 1;
 let lineStatus = 0;
 
-drawPolygon(sides, 0);
+updateTurnButtons(sides);
+drawPolygon(sides, 0, turns);
 
 const slider = get("poly-slider")
 slider.addEventListener("input", (event) => {
   sides = event.target.value;
   clear(get("svg"));
-  drawPolygon(sides, lineStatus);
-})
+  updateTurnButtons(sides);
+  drawPolygon(sides, lineStatus, turns);
+});
 
 const lineButtons = get("line-buttons");
 lineButtons.addEventListener("change", (event) => {
   lineStatus = event.target.value;
   clear(get("svg"));
-  drawPolygon(sides, lineStatus);
-})
+  drawPolygon(sides, lineStatus, turns);
+});
+
+//const turnButtons = get("turn-buttons");
 
 /*const animationInterval = setInterval(() => {
 
