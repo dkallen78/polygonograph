@@ -116,6 +116,8 @@ function drawPolygon(sides, turns, lineStatus) {
     path.setAttribute("stroke", "black");
   svg.appendChild(path);
 
+  updateSchlafli(sides, turns);
+
   switch(lineStatus) {
     case "1":
       connectVertices(polyPath.points, svg);
@@ -143,9 +145,9 @@ function updateTurnButtons(sides) {
   let radio = make.radio("turns", "1", "turns-1");
   turnDiv.appendChild(radio);
 
-  if (sides < 5) {
+  /*if (sides < 5) {
     return
-  };
+  };*/
 
   const factors = findFactors(sides);
 
@@ -158,28 +160,26 @@ function updateTurnButtons(sides) {
 
   turnDiv.addEventListener("change", turnButtonListener);
   
-  /*if (turnDiv.hasChildNodes()) {
-    turnDiv.dataset.event = "true";
-    
-  } else if (turnDiv.dataset.event === "true") {
-    turnDiv.dataset.event = "false";
-    turns = 1;
+  const currentTurns = get(`turns-${turns}`);
+  console.log(turns);
 
-    turnDiv.removeEventListener("change", turnButtonListener);
-  }
-
-  if (get(`turns-${turns}`) === null) {
-    console.log("here we are")
+  if (currentTurns === null) {
     turns = parseInt(turnDiv.lastChild.value, 10);
     turnDiv.lastChild.checked = true;
-  }*/
+  } else {
+    currentTurns.checked = true;
+  }
 }
 
 function turnButtonListener(event) {
   turns = parseInt(event.target.value, 10);
   clear(get("svg"));
-  console.log(sides, turns);
   drawPolygon(sides, turns, lineStatus);
+}
+
+function updateSchlafli(sides, turns) {
+  let polygonId = get("polygon-id");
+  polygonId.innerHTML = `{${sides}/${turns}}`;
 }
 
 let sides = 3;
