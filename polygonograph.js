@@ -24,7 +24,7 @@ function makePolyPath(sides, turns, startAngle) {
   let baseTurns = turns / GCD;
   let stellations = GCD;
 
-  //console.clear();
+  console.clear();
   console.log(`{${baseEdges}/${baseTurns}} ${GCD}`)
 
   for (let i = 0; i < stellations; i++) {
@@ -175,7 +175,6 @@ function updateTurnButtons(sides) {
   turnDiv.addEventListener("change", turnButtonListener);
   
   const currentTurns = get(`turns-${turns}`);
-  console.log(turns);
 
   if (currentTurns === null) {
     turns = parseInt(turnDiv.lastChild.value, 10);
@@ -192,6 +191,7 @@ function turnButtonListener(event) {
 }
 
 function updateSchlafli(sides, turns) {
+  
   let polygonId = get("polygon-id");
   polygonId.innerHTML = `{${sides}/${turns}}`;
 }

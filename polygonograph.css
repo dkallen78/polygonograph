@@ -20,7 +20,7 @@ section {
 
 #turn-buttons-div {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
 #turn-buttons-div input {
@@ -29,7 +29,7 @@ section {
 
 #turn-buttons-div label {
   text-align: right;
-  padding-right: 1rem;
+  padding-right: .25rem;
 }
 
 .red-label {

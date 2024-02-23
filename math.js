@@ -104,6 +104,14 @@ function findFactors(n) {
 }
 
 function findGreatestFactor(n1, n2) {
+  //----------------------------------------------------//
+  //Finds the largest common factor between two numbers //
+  //----------------------------------------------------//
+  //n1, n2(integer): integers, the greatest common      //
+  //  factor of which is to be found                    // 
+  //----------------------------------------------------//
+  //return(integer): the greatest common factor         //   
+  //----------------------------------------------------//
 
   if (n1 === 1 || n2 === 1) return 1;
 
@@ -123,21 +131,23 @@ function findGreatestFactor(n1, n2) {
 }
 
 function areCoprime(n1, n2) {
-
-  console.log(n1, n2);
+  //----------------------------------------------------//
+  //Determines whether two numbers are coprime          //
+  //----------------------------------------------------//
+  //n1, n2(integer): numbers of which the coprimality is//
+  //  to be determined                                  //
+  //----------------------------------------------------//
+  //return(boolean): whether or not the numbers are     //
+  //  coprime                                           //
+  //----------------------------------------------------//
 
   if (n1 === 1 || n2 === 1) return true;
-  console.log("no 1s")
 
   const factors1 = findFactors(n1);
   const factors2 = findFactors(n2);
 
-  console.log(factors1, factors2)
-
   if (factors1.includes(n2)) return false;
   if (factors2.includes(n1)) return false;
-
-  console.log("no samesies")
 
   for (let i = 0; i < factors1.length; i++) {
     if (factors2.includes(factors1[i])) return false;
