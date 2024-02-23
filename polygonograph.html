@@ -20,7 +20,7 @@
       <section id="control-panel">
         <fieldset id="poly-slider-div">
           <legend> Number of Vertices</legend>
-          <input type="range" id="poly-slider" name="poly-slider" min="3" max="50" value="3">
+          <input type="range" id="poly-slider" name="poly-slider" min="3" max="100" value="3">
           <span id="polygon-id"></span>
         </fieldset>
         <fieldset id="turn-buttons">
@@ -28,6 +28,18 @@
           <div id="turn-buttons-div">
 
           </div>
+        </fieldset>
+        <fieldset id="fill-rules">
+          <legend>Fill Rules</legend>
+          
+          <input type="radio" id="no-fill" name="fill-rules" value="no-fill" checked>
+          <label for="no-fill">No Fill</label>
+          
+          <input type="radio" id="nonzero" name="fill-rules" value="nonzero">
+          <label for="nonzero">Non-zero</label>
+
+          <input type="radio" id="evenodd" name="fill-rules" value="evenodd">
+          <label for="evenodd">Even/Odd</label>
         </fieldset>
         <!--<fieldset id="line-buttons">
           <legend>Additional Line Options</legend>

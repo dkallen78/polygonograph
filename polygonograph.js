@@ -124,9 +124,9 @@ function drawPolygon(sides, turns, lineStatus) {
 
   const svg = get("svg");
 
-  let path = make.path();
+  let path = make.path("path");
     path.setAttribute("d", polyPath.path);
-    path.setAttribute("fill-opacity", 0);
+    path.setAttribute("class", currentClass);
     path.setAttribute("stroke", "black");
   svg.appendChild(path);
 
@@ -191,7 +191,7 @@ function turnButtonListener(event) {
 }
 
 function updateSchlafli(sides, turns) {
-  
+
   let polygonId = get("polygon-id");
   polygonId.innerHTML = `{${sides}/${turns}}`;
 }
@@ -203,6 +203,7 @@ const svgSize = 100;
 const center = svgSize / 2;
 const radius = (svgSize / 2) - 1;
 let lineStatus = 0;
+let currentClass = "no-fill";
 
 updateTurnButtons(sides);
 drawPolygon(sides, turns, lineStatus);
@@ -215,6 +216,14 @@ slider.addEventListener("input", (event) => {
   updateTurnButtons(sides);
   drawPolygon(sides, turns, lineStatus);
 });
+
+const fillRules = get("fill-rules");
+get("no-fill").checked = true;
+fillRules.addEventListener("change", (event) => {
+  let path = get("path");
+  currentClass = event.target.value;
+  path.setAttribute("class", currentClass);
+})
 
 /*const lineButtons = get("line-buttons");
 lineButtons.addEventListener("change", (event) => {

@@ -9,6 +9,20 @@ svg {
   stroke-width: .25;
 }
 
+.no-fill {
+  fill-opacity: 0;
+}
+
+.nonzero {
+  fill-opacity: 100;
+  fill-rule: nonzero;
+}
+
+.evenodd {
+  fill-opacity: 100;
+  fill-rule: evenodd;
+}
+
 section {
   width: 50vh;
 }
@@ -16,6 +30,10 @@ section {
 #poly-slider-div {
   display: flex;
   justify-content: space-between;
+}
+
+#poly-slider {
+  width: 80%;
 }
 
 #turn-buttons-div {
