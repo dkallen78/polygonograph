@@ -122,3 +122,27 @@ function findGreatestFactor(n1, n2) {
   return commonFactors[commonFactors.length - 1];
 }
 
+function areCoprime(n1, n2) {
+
+  console.log(n1, n2);
+
+  if (n1 === 1 || n2 === 1) return true;
+  console.log("no 1s")
+
+  const factors1 = findFactors(n1);
+  const factors2 = findFactors(n2);
+
+  console.log(factors1, factors2)
+
+  if (factors1.includes(n2)) return false;
+  if (factors2.includes(n1)) return false;
+
+  console.log("no samesies")
+
+  for (let i = 0; i < factors1.length; i++) {
+    if (factors2.includes(factors1[i])) return false;
+  }
+
+  return true;
+}
+

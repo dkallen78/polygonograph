@@ -16,7 +16,6 @@ function makePolyPath(sides, turns, startAngle) {
   //----------------------------------------------------//
 
   const angleChange = 360 / sides;
-  //let angle = startAngle;
   let shapePath = "";
   let points = [];
 
@@ -25,7 +24,7 @@ function makePolyPath(sides, turns, startAngle) {
   let baseTurns = turns / GCD;
   let stellations = GCD;
 
-  console.clear();
+  //console.clear();
   console.log(`{${baseEdges}/${baseTurns}} ${GCD}`)
 
   for (let i = 0; i < stellations; i++) {
@@ -47,27 +46,9 @@ function makePolyPath(sides, turns, startAngle) {
       }
     }
     shapePath += "Z ";
-
   }
 
-  console.log(shapePath);
-
-  /*for (let i = 0; i < sides * turns; i += turns) {
-
-    const x = center + (Math.cos(toRad(startAngle + (angleChange * i))) * radius);
-    const y = center + (Math.sin(toRad(startAngle + (angleChange * i))) * radius);
-  
-    const point = new Point(x, y);
-    points.push(point);
-  
-    if (i === 0) {
-      shapePath += `M ${x} ${y} `;
-    } else {
-      shapePath += `L ${x} ${y} `;
-    }
-  }
-
-  shapePath += "Z";*/
+  //console.log(shapePath);
 
   return {points: points, path: shapePath};
 }
@@ -185,6 +166,10 @@ function updateTurnButtons(sides) {
     turnDiv.appendChild(label);
     radio = make.radio("turns", i, `turns-${i}`);
     turnDiv.appendChild(radio);
+
+    if (areCoprime(sides, i)) {
+      label.classList.add("red-label");
+    }
   }
 
   turnDiv.addEventListener("change", turnButtonListener);
@@ -223,6 +208,7 @@ updateTurnButtons(sides);
 drawPolygon(sides, turns, lineStatus);
 
 const slider = get("poly-slider")
+slider.value = "3";
 slider.addEventListener("input", (event) => {
   sides = event.target.value;
   clear(get("svg"));
@@ -230,12 +216,12 @@ slider.addEventListener("input", (event) => {
   drawPolygon(sides, turns, lineStatus);
 });
 
-const lineButtons = get("line-buttons");
+/*const lineButtons = get("line-buttons");
 lineButtons.addEventListener("change", (event) => {
   lineStatus = event.target.value;
   clear(get("svg"));
   drawPolygon(sides, turns, lineStatus);
-});
+});*/
 
 //const turnButtons = get("turn-buttons");
 
